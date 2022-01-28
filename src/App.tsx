@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Button, TextField } from "@mui/material";
 import "./App.css";
 import { OutputForm } from "./components/OutputForm";
 import { Header } from "./components/Header";
@@ -13,13 +13,21 @@ function App() {
     setText(e.target.value);
   };
 
-  const changeLength = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const changeLength = () => {
     setLength(text.length);
     let textWithoutCR = text.replace(/\n/g, "");
     setLengthNoCR(textWithoutCR.length);
     let textWithoutSpace = textWithoutCR.replace(/\s+/g, "");
     setLengthNoSpace(textWithoutSpace.length);
   };
+
+  useEffect(() => {
+    changeLength()
+  }, [text])
+
+  const clearText = () => {
+    setText("")
+  }
 
   return (
     <div className="App">
@@ -31,10 +39,13 @@ function App() {
         rows={9}
         sx={{ width: "80%" }}
         onChange={handleChange}
-        onKeyUp={changeLength}
-      >
-        {text}
-      </TextField>
+        value={text}
+      />
+      <div className="buttons">
+        <Button variant="outlined" color="error" onClick={() => clearText()}>
+          文字をクリアする
+        </Button>
+      </div>
       <div
         style={{
           display: "flex",
