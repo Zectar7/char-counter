@@ -7,5 +7,15 @@
   justify-content: flex-end;
   align-items: center;
   width: 90%;
-  margin-top: 5px;
+  margin-top: 3px;
+}
+
+header {
+  font-family: 'Kosugi Maru', sans-serif;
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+#head-desc {
+  font-size: 15px;
 }
