@@ -3,6 +3,7 @@ import { Button, TextField } from "@mui/material";
 import "./App.css";
 import { OutputForm } from "./components/OutputForm";
 import { Header } from "./components/Header";
+import { Buttons } from "./components/Buttons";
 
 function App() {
   const [text, setText] = useState("");
@@ -22,16 +23,25 @@ function App() {
   };
 
   useEffect(() => {
-    changeLength()
-  }, [text])
+    changeLength();
+  }, [text]);
 
   const clearText = () => {
-    setText("")
-  }
+    setText("");
+  };
+
+  const readClipBord = () => {
+    navigator.clipboard
+      .readText()
+      .then((data) => {
+        setText(data);
+      })
+      .catch((e) => console.log(e));
+  };
 
   return (
     <div className="App">
-      <Header/>
+      <Header />
       <TextField
         id="outlined-multiline-static"
         label="文字を入力してください"
@@ -42,9 +52,7 @@ function App() {
         value={text}
       />
       <div className="buttons">
-        <Button variant="outlined" color="error" onClick={() => clearText()}>
-          文字をクリアする
-        </Button>
+        <Buttons readClipBord={readClipBord} clearText={clearText} />
       </div>
       <div
         style={{
