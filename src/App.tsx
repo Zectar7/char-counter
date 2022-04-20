@@ -10,6 +10,7 @@ function App() {
   const [length, setLength] = useState(0);
   const [lengthNoCR, setLengthNoCR] = useState(0);
   const [lengthNoSpace, setLengthNoSpace] = useState(0);
+  const [numWords, setNumWords] = useState(0);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
@@ -20,6 +21,8 @@ function App() {
     setLengthNoCR(textWithoutCR.length);
     let textWithoutSpace = textWithoutCR.replace(/\s+/g, "");
     setLengthNoSpace(textWithoutSpace.length);
+    let textNumWords = text === "" ? 0 : text.trim().split(/\s+/).length;
+    setNumWords(textNumWords);
   };
 
   useEffect(() => {
@@ -61,9 +64,10 @@ function App() {
           alignItems: "center",
         }}
       >
-        <OutputForm length={length} desc="改行込みの文字数" />
-        <OutputForm length={lengthNoCR} desc="改行抜きの文字数" />
-        <OutputForm length={lengthNoSpace} desc="改行、空白抜きの文字数" />
+        <OutputForm length={length} desc="改行込みの文字数" unit="文字" />
+        <OutputForm length={lengthNoCR} desc="改行抜きの文字数" unit="文字" />
+        <OutputForm length={lengthNoSpace} desc="改行、空白抜きの文字数" unit="文字" />
+        <OutputForm length={numWords} desc="空白区切りの(英)単語数" unit="単語" />
       </div>
     </div>
   );

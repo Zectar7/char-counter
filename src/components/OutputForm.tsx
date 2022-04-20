@@ -9,14 +9,15 @@ import React from "react";
 type props = {
   length: Number;
   desc: String;
+  unit: String;
 };
 
-export const OutputForm: React.VFC<props> = ({ length, desc }) => {
+export const OutputForm: React.VFC<props> = ({ length, desc, unit }) => {
   return (
     <FormControl sx={{ m: 1, width: "30ch" }} variant="outlined">
       <OutlinedInput
         id="outlined-adornment-weight"
-        endAdornment={<InputAdornment position="end">文字</InputAdornment>}
+        endAdornment={<InputAdornment position="end">{unit}</InputAdornment>}
         aria-describedby="outlined-weight-helper-text"
         inputProps={{
           "aria-label": "weight",
