@@ -4,6 +4,7 @@ import "./App.css";
 import { OutputForm } from "./components/OutputForm";
 import { Header } from "./components/Header";
 import { Buttons } from "./components/Buttons";
+import GraphemeSplitter from 'grapheme-splitter';
 
 function App() {
   const [text, setText] = useState("");
@@ -14,13 +15,14 @@ function App() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
+  const splitter = new GraphemeSplitter();
 
   const changeLength = () => {
-    setLength(text.length);
+    setLength(splitter.countGraphemes(text));
     let textWithoutCR = text.replace(/\n/g, "");
-    setLengthNoCR(textWithoutCR.length);
+    setLengthNoCR(splitter.countGraphemes(textWithoutCR));
     let textWithoutSpace = textWithoutCR.replace(/\s+/g, "");
-    setLengthNoSpace(textWithoutSpace.length);
+    setLengthNoSpace(splitter.countGraphemes(textWithoutSpace));
     let textNumWords = text === "" ? 0 : text.trim().split(/\s+/).length;
     setNumWords(textNumWords);
   };
