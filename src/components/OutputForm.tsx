@@ -4,7 +4,7 @@
   InputAdornment,
   OutlinedInput,
 } from "@mui/material";
-import React from "react";
+import React, { memo } from "react";
 
 type props = {
   length: Number;
@@ -12,7 +12,7 @@ type props = {
   unit: String;
 };
 
-export const OutputForm: React.VFC<props> = ({ length, desc, unit }) => {
+export const OutputForm: React.VFC<props> = memo(({ length, desc, unit }) => {
   return (
     <FormControl sx={{ m: 1, width: "30ch" }} variant="outlined">
       <OutlinedInput
@@ -28,4 +28,4 @@ export const OutputForm: React.VFC<props> = ({ length, desc, unit }) => {
       <FormHelperText id="outlined-weight-helper-text">{desc}</FormHelperText>
     </FormControl>
   );
-};
+});

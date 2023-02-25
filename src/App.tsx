@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Button, TextField } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
+import { TextField } from "@mui/material";
 import "./App.css";
 import { OutputForm } from "./components/OutputForm";
 import { Header } from "./components/Header";
 import { Buttons } from "./components/Buttons";
-import GraphemeSplitter from 'grapheme-splitter';
+import GraphemeSplitter from "grapheme-splitter";
 
 function App() {
   const [text, setText] = useState("");
@@ -31,18 +31,18 @@ function App() {
     changeLength();
   }, [text]);
 
-  const clearText = () => {
+  const clearText = useCallback(() => {
     setText("");
-  };
+  }, [setText]);
 
-  const readClipBord = () => {
+  const readClipBord = useCallback(() => {
     navigator.clipboard
       .readText()
       .then((data) => {
         setText(data);
       })
       .catch((e) => console.log(e));
-  };
+  }, [setText]);
 
   return (
     <div className="App">
@@ -68,8 +68,16 @@ function App() {
       >
         <OutputForm length={length} desc="改行込みの文字数" unit="文字" />
         <OutputForm length={lengthNoCR} desc="改行抜きの文字数" unit="文字" />
-        <OutputForm length={lengthNoSpace} desc="改行、空白抜きの文字数" unit="文字" />
-        <OutputForm length={numWords} desc="空白区切りの(英)単語数" unit="単語" />
+        <OutputForm
+          length={lengthNoSpace}
+          desc="改行、空白抜きの文字数"
+          unit="文字"
+        />
+        <OutputForm
+          length={numWords}
+          desc="空白区切りの(英)単語数"
+          unit="単語"
+        />
       </div>
     </div>
   );

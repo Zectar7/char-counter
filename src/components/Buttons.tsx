@@ -1,11 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import { Button } from "@mui/material";
 type props = {
   readClipBord: VoidFunction;
   clearText: VoidFunction;
 };
 
-export const Buttons: React.VFC<props> = ({ readClipBord, clearText }) => {
+export const Buttons: React.VFC<props> = memo(({ readClipBord, clearText }) => {
   return (
     <div className="buttons">
       <Button
@@ -21,4 +21,4 @@ export const Buttons: React.VFC<props> = ({ readClipBord, clearText }) => {
       </Button>
     </div>
   );
-};
+});
