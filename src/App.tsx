@@ -1,48 +1,26 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { TextField } from "@mui/material";
 import "./App.css";
 import { OutputForm } from "./components/OutputForm";
 import { Header } from "./components/Header";
 import { Buttons } from "./components/Buttons";
-import GraphemeSplitter from "grapheme-splitter";
+import { useStore } from "./store";
 
 function App() {
-  const [text, setText] = useState("");
-  const [length, setLength] = useState(0);
-  const [lengthNoCR, setLengthNoCR] = useState(0);
-  const [lengthNoSpace, setLengthNoSpace] = useState(0);
-  const [numWords, setNumWords] = useState(0);
+  const {
+    text,
+    setText,
+    clearText,
+    readClipboard,
+    length,
+    lengthNoCR,
+    lengthNoSpace,
+    numWords,
+  } = useStore();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
-  const splitter = new GraphemeSplitter();
-
-  const changeLength = () => {
-    setLength(splitter.countGraphemes(text));
-    let textWithoutCR = text.replace(/\n/g, "");
-    setLengthNoCR(splitter.countGraphemes(textWithoutCR));
-    let textWithoutSpace = textWithoutCR.replace(/\s+/g, "");
-    setLengthNoSpace(splitter.countGraphemes(textWithoutSpace));
-    let textNumWords = text === "" ? 0 : text.trim().split(/\s+/).length;
-    setNumWords(textNumWords);
-  };
-
-  useEffect(() => {
-    changeLength();
-  }, [text]);
-
-  const clearText = useCallback(() => {
-    setText("");
-  }, [setText]);
-
-  const readClipBord = useCallback(() => {
-    navigator.clipboard
-      .readText()
-      .then((data) => {
-        setText(data);
-      })
-      .catch((e) => console.log(e));
-  }, [setText]);
 
   return (
     <div className="App">
@@ -57,7 +35,7 @@ function App() {
         value={text}
       />
       <div className="buttons">
-        <Buttons readClipBord={readClipBord} clearText={clearText} />
+        <Buttons readClipboard={readClipboard} clearText={clearText} />
       </div>
       <div
         style={{
